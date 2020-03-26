@@ -78,7 +78,9 @@ router.route('/insults')
     //.get(authJwtController.isAuthenticated, function (req, res) {
     .get(function (req, res) {
         if (req.body.category){
-
+            Insult.aggregate([{ $match: { category: req.body.category } }, { $sample: { size: 1 } }]).exec(function (err, insult) {
+                res.status(200).send({msg: "get random insult", insult: insult})
+            })
         }
         else {
             Insult.find().select('insult category').exec(function (err, insults) {
