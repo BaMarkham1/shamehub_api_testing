@@ -81,7 +81,10 @@ router.route('/insults')
             var insult = new Insult()
             insult.category = req.body.category;
             Insult.aggregate([{ $match: { category: req.body.category } }, { $sample: { size: 1 } }]).exec(function (err, insult) {
-                res.status(200).send({msg: "get random insult", insult: insult[0]})
+                if (insult[0]){
+                    res.status(200).send({msg: "get random insult", insult: insult[0]})
+                }
+                else res.status(400).send({msg: "no insults exist for this category")
             })
         }
         else {
