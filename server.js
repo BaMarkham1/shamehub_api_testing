@@ -79,7 +79,7 @@ router.route('/insults')
     .get(function (req, res) {
         if (req.body.category){
             var insult = new Insult()
-            insult.category = req.body.category
+            insult.category = req.body.category;
             Insult.aggregate([{ $match: { category: req.body.category } }, { $sample: { size: 1 } }]).exec(function (err, insult) {
                 res.status(200).send({msg: "get random insult", insult: insult[0]})
             })
