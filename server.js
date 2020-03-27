@@ -75,9 +75,21 @@ router.post('/signup', function(req, res) {
 });
 
 router.route('/insults/:category')
+    .get(function(req, res) {
+        var insult = new Insult()
+        insult.category = req.params.category;
+        Insult.aggregate([{ $match: { category: req.params.category } }, { $sample: { size: 1 } }]).exec(function (err, insult) {
+            if (insult[0]){
+                res.status(200).send({msg: "get random insult", insult: insult[0]})
+            }
+            else res.status(400).send({msg: "no insults exist for this category"})
+        })
+    })
+
+router.route('/insults')
     //.get(authJwtController.isAuthenticated, function (req, res) {
     .get(function (req, res) {
-        if (req.params.category){
+        if (req.body.category){
             var insult = new Insult()
             insult.category = req.body.category;
             Insult.aggregate([{ $match: { category: req.body.category } }, { $sample: { size: 1 } }]).exec(function (err, insult) {
