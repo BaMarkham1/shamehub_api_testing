@@ -143,12 +143,12 @@ router.route('/insults')
                         res.json({success: true, token: 'JWT ' + token});
                     }
                     else {
-                        res.status(401).send({success: false, message: 'incorrect_password'});
+                        res.status(401).send({success: false, message: 'incorrect-password'});
                     }
                 });
             }
             else
-                res.status(401).send({success: false, message: 'username_not_found'})
+                res.status(401).send({success: false, message: 'username-not-found'})
         });
     });
 
