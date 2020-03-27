@@ -84,7 +84,7 @@ router.route('/insults')
                 if (insult[0]){
                     res.status(200).send({msg: "get random insult", insult: insult[0]})
                 }
-                else res.status(400).send({msg: "no insults exist for this category")
+                else res.status(400).send({msg: "no insults exist for this category"})
             })
         }
         else {
