@@ -131,12 +131,12 @@ router.route('/insults/:category')
                         res.json({success: true, token: 'JWT ' + token});
                     }
                     else {
-                        res.status(401).send({success: false, message: 'password incorrect.'});
+                        res.status(401).send({success: false, message: 'incorrect password'});
                     }
                 });
             }
             else
-                res.status(401).send({success: false, message: 'username not found.'})
+                res.status(401).send({success: false, message: 'username not found'})
         });
     });
 
