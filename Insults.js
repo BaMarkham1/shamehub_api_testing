@@ -9,7 +9,7 @@ mongoose.set('useCreateIndex', true);
 
 var InsultSchema = new Schema({
     insult: { type: String,  required: true, index: { unique: true } },
-    category: { type: String, enum: ["incorrect password", "username not found", "shamehub update"], required: true }
+    category: { type: String, enum: ["incorrect-password", "username-not-found", "shamehub-update"], required: true }
 });
 
 // return the model
