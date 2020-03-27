@@ -74,10 +74,10 @@ router.post('/signup', function(req, res) {
     }
 });
 
-router.route('/insults')
+router.route('/insults/:category')
     //.get(authJwtController.isAuthenticated, function (req, res) {
     .get(function (req, res) {
-        if (req.body.category){
+        if (req.params.category){
             var insult = new Insult()
             insult.category = req.body.category;
             Insult.aggregate([{ $match: { category: req.body.category } }, { $sample: { size: 1 } }]).exec(function (err, insult) {
