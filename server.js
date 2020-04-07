@@ -86,6 +86,27 @@ router.route('/insults/:category')
         })
     })
 
+router.route('/users/bio')
+    .post(authJwtController.isAuthenticated, function(req, res){
+        //get the user from the token
+        auth = req.headers.authorization.split(' ')[1]
+        verified = jwt.verify(auth, authJwtController.secret)
+        User.findOne({_id : verified.id}).select('username').exec(function(err, user) {
+            if (err) res.send(err);
+            //post the information
+            req.body.bio = user.bio;
+            User.updateOne({_id : verified.id}, {$set: user}, function(err) {
+                //Movie.updateOne({title:req.body.current_title}, {$set: { title : req.body.title, genre : req.body.genre, year: req.body.year }}, function(err) {
+                if (err){
+                    res.send(err);
+                }
+                else {
+                    res.status(200).send({msg: "updated bio"});
+                }
+            })
+        });
+    })
+
 router.route('/insults')
     //.get(authJwtController.isAuthenticated, function (req, res) {
     .get(function (req, res) {
