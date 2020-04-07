@@ -94,7 +94,7 @@ router.route('/users/bio')
         User.findOne({_id : verified.id}).select('username').exec(function(err, user) {
             if (err) res.send(err);
             //post the information
-            req.body.bio = user.bio;
+             user.bio = req.body.bio;
             User.updateOne({_id : verified.id}, {$set: user}, function(err) {
                 //Movie.updateOne({title:req.body.current_title}, {$set: { title : req.body.title, genre : req.body.genre, year: req.body.year }}, function(err) {
                 if (err){
