@@ -97,15 +97,12 @@ router.route('/users/:user/bio')
     })
 
 router.route('/users/:user')
-    .get(authJwtController.isAuthenticated, function(req, res ){
+    .get(authJwtController.isAuthenticated, function(req, res){
         //get the user from the user param
-        console.log(req.params.user)
         User.findOne({username : req.params.user}).select('bio').exec(function(err, user) {
-            if (err) res.status(400).send(err);
+            if (err) res.send(err);
             //post the information
-            console.log(user.username)
-            console.log(user.bio)
-            res.status(210).send({msg: "got something?"});
+            res.status(200).send({bio: user.bio});
         });
     })
     .put(authJwtController.isAuthenticated, function(req, res){
