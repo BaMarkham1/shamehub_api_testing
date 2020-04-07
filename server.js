@@ -86,6 +86,16 @@ router.route('/insults/:category')
         })
     })
 
+router.route('/users/:user/bio')
+    .get(authJwtController.isAuthenticated, function(req, res){
+        //get the user from the user param
+        User.findOne({username : req.params.user}).select('bio').exec(function(err, user) {
+            if (err) res.send(err);
+            //post the information
+            res.status(200).send({bio: user.bio});
+        });
+    })
+
 router.route('/users/bio')
     .put(authJwtController.isAuthenticated, function(req, res){
         //get the user from the token
