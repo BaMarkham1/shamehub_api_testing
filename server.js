@@ -86,15 +86,30 @@ router.route('/insults/:category')
         })
     })
 
-router.route('/users/:user/bio')
+router.route('/users/:user')
     .get(authJwtController.isAuthenticated, function(req, res){
         //get the user from the user param
         User.findOne({username : req.params.user}).select('bio').exec(function(err, user) {
             if (err) res.send(err);
             //post the information
-            res.status(200).send({bio: user.bio});
+            res.status(200).send({user: user});
         });
     })
+    .put(authJwtController.isAuthenticated, function(req, res){
+        User.findOne({username : req.params.user}).select('bio').exec(function(err, user) {
+            if (err) res.send(err);
+            if (req.body.bio) {
+                user.bio = req.body.bio;
+            }
+            User.updateOne({username : user.username}, {$set: user}, function(err) {
+                if (err) {
+                    res.send(err)
+                }
+                res.status(200).send({msg: "updated profile"})
+            })
+        })
+    })
+
 
 router.route('/users/bio')
     .put(authJwtController.isAuthenticated, function(req, res){
