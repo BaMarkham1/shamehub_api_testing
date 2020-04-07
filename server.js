@@ -96,7 +96,7 @@ router.route('/users/:user')
         });
     })
     .put(authJwtController.isAuthenticated, function(req, res){
-        User.findOne({username : req.params.user}).select('bio').exec(function(err, user) {
+        User.findOne({username : req.params.user}).select('username bio').exec(function(err, user) {
             if (err) res.send(err);
             if (req.body.bio) {
                 user.bio = req.body.bio;
