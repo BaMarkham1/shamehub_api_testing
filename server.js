@@ -92,6 +92,8 @@ router.route('/users/:user')
         User.findOne({username : req.params.user}).select('username bio').exec(function(err, user) {
             if (err) res.status(400).send(err);
             //post the information
+            console.log(user.username)
+            console.log(user.bio)
             res.status(210).send({user: new ObjectId(user)});
         });
     })
