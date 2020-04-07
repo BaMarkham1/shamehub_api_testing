@@ -90,7 +90,7 @@ router.route('/users/:user')
     .get(authJwtController.isAuthenticated, function(req, res){
         //get the user from the user param
         User.findOne({username : req.params.user}).select('username bio').exec(function(err, user) {
-            if (err) res.send(err);
+            if (err) res.status(400).send(err);
             //post the information
             res.status(200).send({username: user.username, bio : user.bio});
         });
