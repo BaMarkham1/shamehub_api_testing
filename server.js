@@ -87,7 +87,7 @@ router.route('/insults/:category')
     })
 
 router.route('/users/bio')
-    .post(authJwtController.isAuthenticated, function(req, res){
+    .put(authJwtController.isAuthenticated, function(req, res){
         //get the user from the token
         auth = req.headers.authorization.split(' ')[1]
         verified = jwt.verify(auth, authJwtController.secret)
